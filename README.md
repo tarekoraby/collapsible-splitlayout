@@ -11,4 +11,4 @@ collapsibleSplitLayout.setPrimaryComponentCollapsible(true);
 collapsibleSplitLayout.setSecondaryComponentCollapsible(true);
 ```
 
-![collapsible-layout.png](collapsible-layout.png")
+![collapsible-layout.png](collapsible-layout.png?raw=true")
