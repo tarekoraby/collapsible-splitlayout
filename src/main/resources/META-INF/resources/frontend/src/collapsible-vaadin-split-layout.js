@@ -317,12 +317,14 @@ class CollapsibleSplitLayoutElement extends
   _primaryCollapsedChanged(primaryCollapsed) {
 	  if(this._primaryChild && this._secondaryChild){
 		  this._primaryChild.style.display = primaryCollapsed ? 'none' : 'flex';
+this.notifyResize();
 	  }	  
     }
   
   _secondaryCollapsedChanged(secondaryCollapsed) {
 	  if(this._primaryChild && this._secondaryChild){
 		  this._secondaryChild.style.display = secondaryCollapsed ? 'none' : 'flex';
+this.notifyResize();
 	  }	  
     }
 
