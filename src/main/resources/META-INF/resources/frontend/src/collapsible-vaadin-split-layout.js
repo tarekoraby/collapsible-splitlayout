@@ -161,12 +161,12 @@ import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
  * @demo demo/index.html
  */
 class CollapsibleSplitLayoutElement extends
-  ElementMixin(
-    ThemableMixin(
-      GestureEventListeners(
-        mixinBehaviors([IronResizableBehavior], PolymerElement)))) {
-  static get template() {
-    return html`
+	ElementMixin(
+		ThemableMixin(
+			GestureEventListeners(
+				mixinBehaviors([IronResizableBehavior], PolymerElement)))) {
+	static get template() {
+		return html`
     <style>
       :host {
         display: flex;
@@ -229,207 +229,207 @@ class CollapsibleSplitLayoutElement extends
       <slot></slot>
     </div>
 `;
-  }
+	}
 
-  static get is() {
-    return 'collapsible-vaadin-split-layout';
-  }
+	static get is() {
+		return 'collapsible-vaadin-split-layout';
+	}
 
-  static get version() {
-    return '1.0.0';
-  }
+	static get version() {
+		return '1.0.0';
+	}
 
-  static get properties() {
-    return {
-      /**
-       * The split layout's orientation. Possible values are: `horizontal|vertical`.
-       */
-      orientation: {
-        type: String,
-        reflectToAttribute: true,
-        value: 'horizontal'
-      },
-      /**
-       * The split layout's collapsible components. Possible values are: `none|primary|secondary|primaryAndSecondary`.
-       */
-      collapsibleComponents: {
-        type: String,
-        reflectToAttribute: true,
-        value: 'none'
-      },
-      /**
-       * If true the primary component is collapsed. If the secondary component was collapsed, setting primaryCollapsed to true
-       * will set secondaryCollapsed to false.
-       */
-      primaryCollapsed: {
-    	  type: Boolean,
-          value: false,
-          reflectToAttribute: true,
-          notify: true,
-          observer: '_primaryCollapsedChanged'
-      },
-      /**
-       * If true the secondary component is collapsed. If the primary component was collapsed, setting secondaryCollapsed to true
-       * will set secondaryCollapsed to false.
-       */
-      secondaryCollapsed: {
-    	  type: Boolean,
-          value: false,
-          reflectToAttribute: true,
-          notify: true,
-          observer: '_secondaryCollapsedChanged'
-      },
+	static get properties() {
+		return {
+			/**
+			 * The split layout's orientation. Possible values are: `horizontal|vertical`.
+			 */
+			orientation: {
+				type: String,
+				reflectToAttribute: true,
+				value: 'horizontal'
+			},
+			/**
+			 * The split layout's collapsible components. Possible values are: `none|primary|secondary|primaryAndSecondary`.
+			 */
+			collapsibleComponents: {
+				type: String,
+				reflectToAttribute: true,
+				value: 'none'
+			},
+			/**
+			 * If true the primary component is collapsed. If the secondary component was collapsed, setting primaryCollapsed to true
+			 * will set secondaryCollapsed to false.
+			 */
+			primaryCollapsed: {
+				type: Boolean,
+				value: false,
+				reflectToAttribute: true,
+				notify: true,
+				observer: '_primaryCollapsedChanged'
+			},
+			/**
+			 * If true the secondary component is collapsed. If the primary component was collapsed, setting secondaryCollapsed to true
+			 * will set secondaryCollapsed to false.
+			 */
+			secondaryCollapsed: {
+				type: Boolean,
+				value: false,
+				reflectToAttribute: true,
+				notify: true,
+				observer: '_secondaryCollapsedChanged'
+			},
 
-      _previousPrimaryPointerEvents: String,
-      _previousSecondaryPointerEvents: String
-    };
-  }
+			_previousPrimaryPointerEvents: String,
+			_previousSecondaryPointerEvents: String
+		};
+	}
 
-  ready() {
-    super.ready();
-    new FlattenedNodesObserver(this, this._processChildren);
-  }
-  
-  _onToggleLeft(e) {
-	  if (this.secondaryCollapsed){
-		  this.secondaryCollapsed = false;
-		  var size = this.orientation === 'vertical' ? 'height' : 'width';
-		  if (this._secondaryChild.getBoundingClientRect()[size]  < 1) {
-			  this._secondaryChild.style.flexBasis = "20px"
-		  }
-	  } else {
-		  this.primaryCollapsed = true;
-	  }
-   }
-  
-  _onToggleRight(e) {
-	  if (this.primaryCollapsed){
-		  this.primaryCollapsed = false;
-		  var size = this.orientation === 'vertical' ? 'height' : 'width';
-		  if (this._primaryChild.getBoundingClientRect()[size]  < 1) {
-			  this._primaryChild.style.flexBasis = "20px"
-		  }
-	  } else {
-		  this.secondaryCollapsed = true;
-	  }
-  }
-  
-  _primaryCollapsedChanged(primaryCollapsed) {
-	  if(this._primaryChild && this._secondaryChild){
-		  this._primaryChild.style.display = primaryCollapsed ? 'none' : 'flex';
-this.notifyResize();
-	  }	  
-    }
-  
-  _secondaryCollapsedChanged(secondaryCollapsed) {
-	  if(this._primaryChild && this._secondaryChild){
-		  this._secondaryChild.style.display = secondaryCollapsed ? 'none' : 'flex';
-this.notifyResize();
-	  }	  
-    }
+	ready() {
+		super.ready();
+		new FlattenedNodesObserver(this, this._processChildren);
+	}
 
-  _processChildren() {
-	  console.log('_processChildren');
-    this.getEffectiveChildren().forEach((child, i) => {
-      if (i === 0) {
-        this._primaryChild = child;
-        child.setAttribute('slot', 'primary');
-      } else if (i == 1) {
-        this._secondaryChild = child;
-        child.setAttribute('slot', 'secondary');
-      } else {
-        child.removeAttribute('slot');
-      }
-    });
-  }
+	_onToggleLeft(e) {
+		if (this.secondaryCollapsed) {
+			this.secondaryCollapsed = false;
+			var size = this.orientation === 'vertical' ? 'height' : 'width';
+			if (this._secondaryChild.getBoundingClientRect()[size] < 1) {
+				this._secondaryChild.style.flexBasis = "20px"
+			}
+		} else {
+			this.primaryCollapsed = true;
+		}
+	}
 
-  _setFlexBasis(element, flexBasis, containerSize) {
-    flexBasis = Math.max(0, Math.min(flexBasis, containerSize));
-    if (flexBasis === 0) {
-      // Pure zero does not play well in Safari
-      flexBasis = 0.000001;
-    }
-    element.style.flex = '1 1 ' + flexBasis + 'px';
-  }
+	_onToggleRight(e) {
+		if (this.primaryCollapsed) {
+			this.primaryCollapsed = false;
+			var size = this.orientation === 'vertical' ? 'height' : 'width';
+			if (this._primaryChild.getBoundingClientRect()[size] < 1) {
+				this._primaryChild.style.flexBasis = "20px"
+			}
+		} else {
+			this.secondaryCollapsed = true;
+		}
+	}
 
-  _setPointerEventsNone(event) {
-    if (!this._primaryChild || !this._secondaryChild) {
-      return;
-    }
-    this._previousPrimaryPointerEvents = this._primaryChild.style.pointerEvents;
-    this._previousSecondaryPointerEvents = this._secondaryChild.style.pointerEvents;
-    this._primaryChild.style.pointerEvents = 'none';
-    this._secondaryChild.style.pointerEvents = 'none';
+	_primaryCollapsedChanged(primaryCollapsed) {
+		if (this._primaryChild && this._secondaryChild) {
+			this._primaryChild.style.display = primaryCollapsed ? 'none' : 'flex';
+			this.notifyResize();
+		}
+	}
 
-    event.preventDefault();
-  }
+	_secondaryCollapsedChanged(secondaryCollapsed) {
+		if (this._primaryChild && this._secondaryChild) {
+			this._secondaryChild.style.display = secondaryCollapsed ? 'none' : 'flex';
+			this.notifyResize();
+		}
+	}
 
-  _restorePointerEvents() {
-    if (!this._primaryChild || !this._secondaryChild) {
-      return;
-    }
-    this._primaryChild.style.pointerEvents = this._previousPrimaryPointerEvents;
-    this._secondaryChild.style.pointerEvents = this._previousSecondaryPointerEvents;
-  }
+	_processChildren() {
+		console.log('_processChildren');
+		this.getEffectiveChildren().forEach((child, i) => {
+			if (i === 0) {
+				this._primaryChild = child;
+				child.setAttribute('slot', 'primary');
+			} else if (i == 1) {
+				this._secondaryChild = child;
+				child.setAttribute('slot', 'secondary');
+			} else {
+				child.removeAttribute('slot');
+			}
+		});
+	}
 
-  _onHandleTrack(event) {
-    if (!this._primaryChild || !this._secondaryChild) {
-      return;
-    }
+	_setFlexBasis(element, flexBasis, containerSize) {
+		flexBasis = Math.max(0, Math.min(flexBasis, containerSize));
+		if (flexBasis === 0) {
+			// Pure zero does not play well in Safari
+			flexBasis = 0.000001;
+		}
+		element.style.flex = '1 1 ' + flexBasis + 'px';
+	}
 
-    var size = this.orientation === 'vertical' ? 'height' : 'width';
-    if (event.detail.state === 'start') {
-      this._startSize = {
-        container: this.getBoundingClientRect()[size] - this.$.splitter.getBoundingClientRect()[size],
-        primary: this._primaryChild.getBoundingClientRect()[size],
-        secondary: this._secondaryChild.getBoundingClientRect()[size]
-      };
+	_setPointerEventsNone(event) {
+		if (!this._primaryChild || !this._secondaryChild) {
+			return;
+		}
+		this._previousPrimaryPointerEvents = this._primaryChild.style.pointerEvents;
+		this._previousSecondaryPointerEvents = this._secondaryChild.style.pointerEvents;
+		this._primaryChild.style.pointerEvents = 'none';
+		this._secondaryChild.style.pointerEvents = 'none';
 
-      return;
-    }
+		event.preventDefault();
+	}
 
-    var distance = this.orientation === 'vertical' ? event.detail.dy : event.detail.dx;
-    const isRtl = this.orientation !== 'vertical' && this.getAttribute('dir') === 'rtl';
-    const dirDistance = isRtl ? -distance : distance;
+	_restorePointerEvents() {
+		if (!this._primaryChild || !this._secondaryChild) {
+			return;
+		}
+		this._primaryChild.style.pointerEvents = this._previousPrimaryPointerEvents;
+		this._secondaryChild.style.pointerEvents = this._previousSecondaryPointerEvents;
+	}
 
-    this._setFlexBasis(this._primaryChild, this._startSize.primary + dirDistance, this._startSize.container);
-    this._setFlexBasis(this._secondaryChild, this._startSize.secondary - dirDistance, this._startSize.container);    
+	_onHandleTrack(event) {
+		if (!this._primaryChild || !this._secondaryChild) {
+			return;
+		}
 
-    if (this.primaryCollapsed  || this.secondaryCollapsed)  {
-    	this.primaryCollapsed = false;
-		this.secondaryCollapsed = false;
-      } 
-    
-    this.notifyResize();
+		var size = this.orientation === 'vertical' ? 'height' : 'width';
+		if (event.detail.state === 'start') {
+			this._startSize = {
+				container: this.getBoundingClientRect()[size] - this.$.splitter.getBoundingClientRect()[size],
+				primary: this._primaryChild.getBoundingClientRect()[size],
+				secondary: this._secondaryChild.getBoundingClientRect()[size]
+			};
 
-    if (event.detail.state === 'end') {
-      this.dispatchEvent(new CustomEvent('splitter-dragend'));
-      
-      if (this.collapsibleComponents != 'none' ){
-    	  if (this._primaryChild.getBoundingClientRect()[size]  < 1) {
-    	 		 this.primaryCollapsed = true;
-    	 	  } else if (this._secondaryChild.getBoundingClientRect()[size]  < 1) {
-    	 		this.secondaryCollapsed = true;
-    	 	  }  
-      }
-      
+			return;
+		}
 
-      delete this._startSize;
-    }
-  }
+		var distance = this.orientation === 'vertical' ? event.detail.dy : event.detail.dx;
+		const isRtl = this.orientation !== 'vertical' && this.getAttribute('dir') === 'rtl';
+		const dirDistance = isRtl ? -distance : distance;
 
-  /**
-   * Fired when the splitter is dragged. Non-bubbling. Fired for the splitter
-   * element and any nested elements with `IronResizableBehavior`.
-   *
-   * @event iron-resize
-   */
+		this._setFlexBasis(this._primaryChild, this._startSize.primary + dirDistance, this._startSize.container);
+		this._setFlexBasis(this._secondaryChild, this._startSize.secondary - dirDistance, this._startSize.container);
 
-  /**
-   * Fired after dragging the splitter have ended.
-   *
-   * @event splitter-dragend
-   */
+		if (this.primaryCollapsed || this.secondaryCollapsed) {
+			this.primaryCollapsed = false;
+			this.secondaryCollapsed = false;
+		}
+
+		this.notifyResize();
+
+		if (event.detail.state === 'end') {
+			this.dispatchEvent(new CustomEvent('splitter-dragend'));
+
+			if (this.collapsibleComponents != 'none') {
+				if (this._primaryChild.getBoundingClientRect()[size] < 1) {
+					this.primaryCollapsed = true;
+				} else if (this._secondaryChild.getBoundingClientRect()[size] < 1) {
+					this.secondaryCollapsed = true;
+				}
+			}
+
+
+			delete this._startSize;
+		}
+	}
+
+	/**
+	 * Fired when the splitter is dragged. Non-bubbling. Fired for the splitter
+	 * element and any nested elements with `IronResizableBehavior`.
+	 *
+	 * @event iron-resize
+	 */
+
+	/**
+	 * Fired after dragging the splitter have ended.
+	 *
+	 * @event splitter-dragend
+	 */
 }
 
 customElements.define(CollapsibleSplitLayoutElement.is, CollapsibleSplitLayoutElement);

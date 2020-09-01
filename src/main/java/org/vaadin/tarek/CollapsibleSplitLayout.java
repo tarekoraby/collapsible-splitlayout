@@ -21,6 +21,7 @@ public class CollapsibleSplitLayout
     public enum Orientation {
         HORIZONTAL, VERTICAL;
     }
+
     private Component primaryComponent;
     private boolean primaryComponentCollapsible;
     private Component secondaryComponent;
