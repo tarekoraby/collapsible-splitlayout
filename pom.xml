@@ -3,7 +3,7 @@
 
     <groupId>org.vaadin.tarek</groupId>
     <artifactId>collapsible-splitlayout</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <name>Collapsible SplitLayout</name>
     <description>An extension of Vaadin SplitLayout to enable collapsing components</description>
 
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
-            <artifactId>vaadin</artifactId>
+            <artifactId>vaadin-core</artifactId>
             <exclusions>
                 <!-- Webjars are only needed when running in Vaadin 13 compatibility mode in V14.
                      Your add-on can support npm in the same version mode and V13 compatiblity mode at the same time,
