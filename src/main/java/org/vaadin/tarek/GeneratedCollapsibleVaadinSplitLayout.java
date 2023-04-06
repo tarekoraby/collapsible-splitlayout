@@ -12,16 +12,17 @@ import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.HasTheme;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.flow.templatemodel.TemplateModel;
 
+@NpmPackage(value = "@polymer/polymer", version = "3.5.1")
+@NpmPackage(value = "@polymer/iron-resizable-behavior", version = "3.0.1")
 @JsModule("./src/collapsible-vaadin-split-layout.js")
 @JsModule("./src/collapsible-vaadin-split-layout-styles.js")
 @Tag("collapsible-vaadin-split-layout")
 public abstract class GeneratedCollapsibleVaadinSplitLayout<R extends GeneratedCollapsibleVaadinSplitLayout<R>>
-        extends PolymerTemplate<TemplateModel>
+        extends Component
         implements HasStyle, ClickNotifier<R>, HasTheme {
 
     @DomEvent("iron-resize")
