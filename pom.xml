@@ -3,7 +3,7 @@
 
     <groupId>org.vaadin.tarek</groupId>
     <artifactId>collapsible-splitlayout</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
     <name>Collapsible SplitLayout</name>
     <description>An extension of Vaadin SplitLayout to enable collapsing components</description>
 
