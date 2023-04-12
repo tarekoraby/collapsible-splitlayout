@@ -8,14 +8,14 @@
     <description>An extension of Vaadin SplitLayout to enable collapsing components</description>
 
     <properties>
-        <vaadin.version>22.0.5</vaadin.version>
+        <vaadin.version>24.0.3</vaadin.version>
 
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jetty.version>9.4.45.v20220203</jetty.version>
+        <jetty.version>11.0.14</jetty.version>
     </properties>
     <organization>
         <name>Tarek Oraby</name>
